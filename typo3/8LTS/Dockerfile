@@ -1,0 +1,40 @@
+FROM php:7.0-apache
+
+ENV webPath /var/www/html
+WORKDIR  ${webPath}
+
+
+RUN apt-get -qq update && apt-get -qq upgrade -y \
+    && apt-get -qq install -y zip wget git \
+    libfreetype6 libfreetype6-dev \
+    libsqlite3-dev libxml2-dev libicu-dev \
+    libmcrypt-dev libjpeg62-turbo-dev \
+    libpng12-dev libcurl4-gnutls-dev libbz2-dev libssl-dev\
+    mcrypt libmagickwand-6.q16-2 libmagickwand-dev imagemagick \
+    libpcre3 \
+    && docker-php-ext-configure gd \
+        --with-freetype-dir=/usr/include/ \
+        --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install mysqli pdo_mysql \
+    zip opcache bcmath bz2 mcrypt \
+     > /dev/null \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && ln -s /var/www/html /webroot \
+    && extDir="$(php-config --extension-dir)" \
+    && mkdir -p "${extDir}" \
+    && echo "extension='${extDir}/imagick.so'" > /usr/local/etc/php/conf.d/imagick.ini \
+    && echo "file_uploads = On\n" \
+        "memory_limit = 256M\n" \
+        "upload_max_filesize = 15M\n" \
+        "post_max_size = 15M\n" \
+        "max_execution_time = 240\n" \
+        "max_input_vars = 1500\n" \
+      > /usr/local/etc/php/conf.d/uploads.ini
+
+VOLUME ${webPath}
+
+EXPOSE 80
+EXPOSE 443
+EXPOSE 9000
