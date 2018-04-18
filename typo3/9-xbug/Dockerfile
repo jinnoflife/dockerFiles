@@ -1,4 +1,4 @@
-FROM jinnoflife/typo3:8
+FROM riconet/typo3:9
 
 ENV webPath /var/www/html
 WORKDIR  ${webPath}
