@@ -10,10 +10,11 @@ RUN apt-get -qq update \
     && apt-get -qq install -y wget zip > /dev/null \
     && chmod +x shopwareDownload.sh \
     && ./shopwareDownload.sh $neededVersion \
-    && echo '@import "./additionalVariables";' > compileChecker.less \
-    && echo '@import "./themes/Frontend/Bare/frontend/_public/src/less/mixins";' >> compileChecker.less \
-    && echo '@import "./themes/Frontend/Responsive/frontend/_public/src/less/mixins";'  >> compileChecker.less \
-    && echo '@import "./frontend/_public/src/less/all";' >> compileChecker.less
+    && echo '@import "./themes/Frontend/Bare/frontend/_public/src/less/variables";\n'\
+        '@import "./additionalVariables";\n'\
+        '@import "./themes/Frontend/Bare/frontend/_public/src/less/mixins";\n'\
+        '@import "./themes/Frontend/Responsive/frontend/_public/src/less/mixins";\n'\
+        '@import "./frontend/_public/src/less/all";\n' > compileChecker.less \
 #final stage
 FROM node:alpine as stageFinal
 WORKDIR /wd
