@@ -11,8 +11,8 @@ RUN apt-get -qq update \
     && chmod +x shopwareDownload.sh \
     && ./shopwareDownload.sh $neededVersion \
     && echo '@import "./additionalVariables";' > compileChecker.less \
-    && echo '@import "./includes/themes/Frontend/Bare/frontend/_public/src/less/all";' >> compileChecker.less \
-    && echo '@import "./includes/themes/Frontend/Responsive/frontend/_public/src/less/all";'  >> compileChecker.less \
+    && echo '@import "./themes/Frontend/Bare/frontend/_public/src/less/_mixins";' >> compileChecker.less \
+    && echo '@import "./themes/Frontend/Responsive/frontend/_public/src/less/_mixins";'  >> compileChecker.less \
     && echo '@import "./frontend/_public/src/less/all";' >> compileChecker.less
 #final stage
 FROM node:alpine as stageFinal

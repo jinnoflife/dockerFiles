@@ -24,11 +24,13 @@ case "$1" in
         ;;
     *)
         echo "no version provided"
+        exit
     ;;
 esac
 
 if [[ -f sw.zip ]]; then
-    unzip -qq sw.zip
+    mkdir -p sw && unzip -qq sw.zip -d sw
+    mv sw/themes . && rm -rrf sw*
     echo "shopware unzipped"
 else
     echo "shopware not downloaded"
