@@ -3,7 +3,7 @@ FROM php:7.0-apache
 WORKDIR /var/www/html
 
 ADD https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz /ioncube/
-#ADD https://raw.githubusercontent.com/neta-io/shopware-docker/master/conf/php.dev.ini /usr/local/etc/php/php.ini
+ADD https: /etc/apache/a0a0.conf
 #apt
 RUN apt-get -qq update \
     && apt-get -qq install -y apt-utils zip wget git \
